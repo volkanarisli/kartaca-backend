@@ -6,7 +6,7 @@ router.post("/latin-to-morse", (req, res) => {
 
   const morse = morsefy.encode(text);
 
-  morse.includes('/') ? res.send({status: 404}) : res.send(morse)
+  morse.includes('/ / /') ? res.send({status: 404}) : res.send(morse)
 });
 
 router.post("/morse-to-latin", (req, res) => {

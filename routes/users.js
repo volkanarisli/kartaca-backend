@@ -18,52 +18,39 @@ router.post('/register', (req, res) => {
   const {name, email, password, password2} = req.body;
 
   User.findOne({email: email}).then(user => {
-    if (user) {
-      res.send({status: 404})
-    } else {
-      const newUser = new User({
-        name,
-        email,
-        password
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(
-              res.send({status: 200})
-            )
-            .catch(err => {
-              console.log(err)
-              res.send({status: 404})
-            });
+      if (user) {
+        res.send({status: 404})
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
         });
-      });
+
+        newUser.save()
+          .then(
+            res.send({status: 200})
+          )
+          .catch(err => {
+            console.log(err)
+            res.send({status: 404})
+          });
+      }
     }
-  });
-});
+  )
+})
 
 // Login
 router.post('/login', (req, res, next) => {
   let {email, password} = req.body;
 
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      if (err) throw err;
-      password = hash;
-    });
-  });
-
-  User.findOne({email: email, password: bcrypt.hash.password })
-    .then(() => {
-    res.send({status: 200})
-  })
+  User.findOne({email: email, password: password})
+    .then((user) => {
+      res.send({status: 200, email: user.email, name: user.name})
+    })
     .catch(() => {
-    res.send({status: 404})
-  })
+      res.send({status: 404})
+    })
 });
 
 // Logout
