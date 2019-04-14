@@ -1,4 +1,13 @@
-KARTACA MORSE CODE CONVERTER
+# kartaca-backend
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm start or node index.js
+```
 
 
-To start to backend side of the projcet write commend "npm start" or "node index.js" After starting back and front side of the project go to http://localhost:8080 to view project
