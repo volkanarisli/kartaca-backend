@@ -77,6 +77,7 @@ io.on("connection", function (socket) {
     chat.created = new Date()
     let response = await new message(chat).save()
     socket.emit("chat", chat)
+    socket.broadcast.emit("chat", chat)
   })
 })
 
